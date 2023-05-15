@@ -1,0 +1,26 @@
+table {
+  width: 98%;
+  border-collapse: collapse;
+  font-size: small;
+  text-align: center;
+}
+
+thead {
+  background-color: #dcdedc;
+}
+
+th {
+  padding: 0.4em;
+  color: #848784;
+  border-radius: 10px;
+}
+
+tr {
+  border-bottom: 1px solid grey;
+  text-align: center;
+  font-size: medium;
+}
+
+td {
+  padding: 1em;
+}
