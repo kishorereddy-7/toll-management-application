@@ -42,7 +42,7 @@ export const TollTable = () => {
   }
 
   const onClickViewTolls = () => {
-    
+    setIsTollgateList(true)
   }
   return (
     <div>
@@ -55,7 +55,9 @@ export const TollTable = () => {
           <Button className="button-left" onClick={onClickNewEntry}>
             Add New Toll
           </Button>
-          <Button className="button-left">View All Tolls</Button>
+          <Button className="button-left" onClick={onClickViewTolls}>
+            View All Tolls
+          </Button>
           <AddNewToll show={addNewToll} onCloseAddNewToll={onCloseAddNewToll} />
           <AddNewEntry
             show={addNewEntry}
