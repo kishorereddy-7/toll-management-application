@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import AddNewToll from "../addnewtoll/AddNewToll";
 import { useState } from "react";
 import AddNewEntry from "../addnewentry/AddNewEntry";
+import { useSelector } from "react-redux";
 
 const tableHeader = [
   "VEHICLE TYPE",
@@ -14,49 +15,56 @@ const tableHeader = [
   "TARIFF",
 ];
 
-const tableData = [
-  { hello: "hello", name: "name", date: "07", toll: "toll", tar: "30" },
-  { hello: "hello", name: "name", date: "07", toll: "toll", tar: "30" },
+const tollsHeaderList = [
+  "TOLL NAME",
+  "CAR/JEEP/VAN",
+  "LCV",
+  "TRUCK/BUS",
+  "HEAVY VEHICLE",
 ];
 
 export const TollTable = () => {
+  const [addNewToll, setAddNewToll] = useState(false);
+  const [addNewEntry, setAddNewEntry] = useState(false);
+  const [isTollgateList, setIsTollgateList] = useState(false);
 
-  const [addNewToll, setAddNewToll] = useState(false)
-  const [addNewEntry, setAddNewEntry] = useState(false)
-  const [isTollgateList, setIsTollgateList] = useState(false)
+  const tollList = useSelector((state) => state.tollsList);
+  const tollEntryList = useSelector((state) => state.tollEntryList);
 
   const onClickNewToll = () => {
-    setAddNewToll(true)
-  }
+    setAddNewToll(true);
+  };
 
   const onClickNewEntry = () => {
-    setAddNewEntry(true)
-  }
+    setAddNewEntry(true);
+  };
 
   const onCloseAddNewToll = () => {
-    setAddNewToll(false)
-  }
+    setAddNewToll(false);
+  };
 
   const onCloseAddNewEntry = () => {
-    setAddNewEntry(false)
-  }
+    setAddNewEntry(false);
+  };
 
   const onClickViewTolls = () => {
-    setIsTollgateList(true)
-  }
+    setIsTollgateList((prevState) => {
+      return !prevState;
+    });
+  };
   return (
     <div>
       <div className="main-header d-flex justify-content-between">
         <Header isTollgateList={isTollgateList} />
         <div>
-          <Button className="button-left" onClick={onClickNewToll}>
+          <Button className="button-left" onClick={onClickNewEntry}>
             Add Vehicle Entry
           </Button>
-          <Button className="button-left" onClick={onClickNewEntry}>
+          <Button className="button-left" onClick={onClickNewToll}>
             Add New Toll
           </Button>
           <Button className="button-left" onClick={onClickViewTolls}>
-            View All Tolls
+            {isTollgateList ? "Back to vehicle logs" : "View All Tolls"}
           </Button>
           <AddNewToll show={addNewToll} onCloseAddNewToll={onCloseAddNewToll} />
           <AddNewEntry
@@ -65,10 +73,15 @@ export const TollTable = () => {
           />
         </div>
       </div>
+      {console.log(tollList)}
       {isTollgateList ? (
-        ""
+        <Table
+          tableHeader={tollsHeaderList}
+          list={tollList}
+          isTollgateList={isTollgateList}
+        />
       ) : (
-        <Table tableHeader={tableHeader} name={tableData} />
+        <Table tableHeader={tableHeader} list={tollEntryList} />
       )}
     </div>
   );
