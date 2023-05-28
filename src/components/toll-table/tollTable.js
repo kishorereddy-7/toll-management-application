@@ -1,7 +1,7 @@
 import "./tollTable.css";
 import Table from "../common/table/Table";
 import Header from "../common/header/Header";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import AddNewToll from "../addnewtoll/AddNewToll";
 import { useState } from "react";
 import AddNewEntry from "../addnewentry/AddNewEntry";
@@ -53,17 +53,17 @@ export const TollTable = () => {
     });
   };
   return (
-    <div>
-      <div className="main-header d-flex justify-content-between">
+    <Card>
+      <div className="main-header row">
         <Header isTollgateList={isTollgateList} />
-        <div>
-          <Button className="button-left" onClick={onClickNewEntry}>
+        <div className="col-md-6 col-lg-5 pull-right">
+          <Button className="button-left mt-2" onClick={onClickNewEntry}>
             Add Vehicle Entry
           </Button>
-          <Button className="button-left" onClick={onClickNewToll}>
+          <Button className="button-left mt-2" onClick={onClickNewToll}>
             Add New Toll
           </Button>
-          <Button className="button-left" onClick={onClickViewTolls}>
+          <Button className="button-left mt-2" onClick={onClickViewTolls}>
             {isTollgateList ? "Back to vehicle logs" : "View All Tolls"}
           </Button>
           <AddNewToll show={addNewToll} onCloseAddNewToll={onCloseAddNewToll} />
@@ -73,16 +73,11 @@ export const TollTable = () => {
           />
         </div>
       </div>
-      {console.log(tollList)}
-      {isTollgateList ? (
-        <Table
-          tableHeader={tollsHeaderList}
-          list={tollList}
-          isTollgateList={isTollgateList}
-        />
-      ) : (
-        <Table tableHeader={tableHeader} list={tollEntryList} />
-      )}
-    </div>
+      <Table
+        tableHeader={isTollgateList ? tollsHeaderList : tableHeader}
+        list={isTollgateList ? tollList : tollEntryList}
+        isTollgateList={isTollgateList}
+      />
+    </Card>
   );
 };

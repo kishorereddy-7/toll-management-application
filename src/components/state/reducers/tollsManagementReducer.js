@@ -6,8 +6,7 @@ import {
 export const tollsManagementReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_TOLL: {
-      state.push(action.payload);
-      return state;
+      return [...state, action.payload];
     }
 
     case UPDATE_TOLL_ON_FILTER: {

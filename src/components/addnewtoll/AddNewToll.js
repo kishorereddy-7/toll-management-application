@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { addTollsManagementAction } from "../state/actions/tollsManagementAction";
+import { tollCenterIntialState } from "../common/contants";
 
 const priceLabel = {
   singleJourneyPrice: "singleJourneyPrice",
@@ -13,45 +14,17 @@ const AddNewToll = (props) => {
   const [tollName, setTollName] = useState("");
   const [tollNameInvalid, setTollNameInvalid] = useState(false);
 
-  const [journeyPrice, setJourneyPrice] = useState([
-    {
-      id: 1,
-      name: "Car/Jeep/Van",
-      singleJourneyPrice: 0,
-      returnJourneyPrice: 0,
-      singleJourneyPriceInvalid: false,
-      returnJourneyPriceInvalid: false,
-    },
-    {
-      id: 2,
-      name: "LCV",
-      singleJourneyPrice: 0,
-      returnJourneyPrice: 0,
-      singleJourneyPriceInvalid: false,
-      returnJourneyPriceInvalid: false,
-    },
-    {
-      id: 3,
-      name: "Truck/Bus",
-      singleJourneyPrice: 0,
-      returnJourneyPrice: 0,
-      singleJourneyPriceInvalid: false,
-      returnJourneyPriceInvalid: false,
-    },
-    {
-      id: 4,
-      name: "Heavy vehicle",
-      singleJourneyPrice: 0,
-      returnJourneyPrice: 0,
-      singleJourneyPriceInvalid: false,
-      returnJourneyPriceInvalid: false,
-    },
-  ]);
+  const [journeyPrice, setJourneyPrice] = useState(tollCenterIntialState);
 
-  // const tollList = useSelector((state) => state.tollsList);
+  const resetState = () => {
+    setTollName("");
+    setTollNameInvalid(false);
+    setJourneyPrice(tollCenterIntialState);
+  };
 
   const handleClose = () => {
     props.onCloseAddNewToll();
+    resetState();
   };
 
   const onChangeTollName = (event) => {
@@ -89,6 +62,7 @@ const AddNewToll = (props) => {
       });
       dispatch(addTollsManagementAction(data));
       props.onCloseAddNewToll();
+      resetState();
     }
   };
 
@@ -108,7 +82,9 @@ const AddNewToll = (props) => {
         ></input>
         <div className="invalid-feedback">Required</div>
         <div className="mt-4">
-          <label className="form-label">Vehicle fair details</label>
+          <label className="form-label mb-4 required">
+            Vehicle fair details
+          </label>
           {journeyPrice.map((vehicle) => {
             return (
               <div
@@ -116,7 +92,7 @@ const AddNewToll = (props) => {
                 className="row"
                 style={{ marginBottom: "10px" }}
               >
-                <p className="input-margin col-3">{vehicle.name}</p>
+                <p className="input-margin col-3 required">{vehicle.name}</p>
                 <div className="col-4">
                   <input
                     style={{ marginRight: "10px" }}

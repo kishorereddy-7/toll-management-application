@@ -9,16 +9,10 @@ const reducers = combineReducers({
   tollsList: tollsManagementReducer,
 });
 
-const initialState = {
-  tollEntryList: [],
-  tollsList: [],
-};
-
 const middleware = [thunk];
 
 const store = createStore(
   reducers,
-  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
 

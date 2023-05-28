@@ -1,6 +1,19 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 body {
   margin: 0;
   font-family: system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.pull-right {
+  text-align: right;
+}
+
+.required:after {
+  content: "  *";
+  color: red;
 }
