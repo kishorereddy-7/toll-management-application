@@ -10,12 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addNewTollEntryAction } from "../state/actions/tollEntryManagementAction";
 import { dateAndTimeDisplay } from "../commonFuntions/time";
 const AddNewEntry = (props) => {
-  const handleClose = () => {
-    props.onCloseAddNewEntry();
-  };
-
-  const dispatch = useDispatch();
-
   const [selectedToll, setSelectedToll] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [vehicleList, setVehicleList] = useState([]);
@@ -25,6 +19,22 @@ const AddNewEntry = (props) => {
 
   const tollNamesList = useSelector((state = {}) => state.tollsList);
   const tollEntryList = useSelector((state = {}) => state.tollEntryList);
+
+  const resetState = () => {
+    setVehicleList([]);
+    setVehicleNumber("");
+    setTariff(0);
+    setVehicleType("");
+    setDisableTariff(false);
+    setSelectedToll("");
+  };
+
+  const handleClose = () => {
+    props.onCloseAddNewEntry();
+    resetState();
+  };
+
+  const dispatch = useDispatch();
 
   const onSelectTollName = (event = {}) => {
     const value = event.target.value;
@@ -84,6 +94,7 @@ const AddNewEntry = (props) => {
 
     dispatch(addNewTollEntryAction(data));
     props.onCloseAddNewEntry();
+    resetState();
   };
 
   return (
