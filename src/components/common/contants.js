@@ -32,3 +32,8 @@ export const tollCenterIntialState = [
     returnJourneyPriceInvalid: false,
   },
 ];
+
+export const toastStatus = {
+  success: "success",
+  error: "danger",
+};

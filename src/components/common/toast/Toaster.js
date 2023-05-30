@@ -1,22 +1,28 @@
-import React, { useState } from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import React from "react";
 import Toast from "react-bootstrap/Toast";
+import { useDispatch, useSelector } from "react-redux";
+import { hideToastAction } from "../../state/actions/toastDetailsAction";
+import { ToastContainer } from "react-bootstrap";
 
-const Toaster = (props) => {
-  const [show, setShow] = useState(false);
+const Toaster = () => {
+  const dispatch = useDispatch();
+  const toastDetails = useSelector((state) => state.toastDetails);
 
   return (
-    <Row>
-      <Col xs={6}>
-        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-          <Toast.Header>
-            <strong className="me-auto">{props.header}</strong>
-          </Toast.Header>
-          <Toast.Body>{props.descrption}</Toast.Body>
-        </Toast>
-      </Col>
-    </Row>
+    <ToastContainer position="top-end" className="p-3">
+      <Toast
+        bg={toastDetails.type}
+        onClose={() => dispatch(hideToastAction())}
+        show={toastDetails.show}
+        delay={3000}
+        autohide
+      >
+        <Toast.Header>
+          <strong className="me-auto">{toastDetails.header}</strong>
+        </Toast.Header>
+        <Toast.Body>{toastDetails.descrption}</Toast.Body>
+      </Toast>
+    </ToastContainer>
   );
 };
 

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { addTollsManagementAction } from "../state/actions/tollsManagementAction";
-import { tollCenterIntialState } from "../common/contants";
+import { toastStatus, tollCenterIntialState } from "../common/contants";
+import { showToastAction } from "../state/actions/toastDetailsAction";
 
 const priceLabel = {
   singleJourneyPrice: "singleJourneyPrice",
@@ -47,27 +48,52 @@ const AddNewToll = (props) => {
   };
 
   const onSubmitDetails = () => {
-    const valid = journeyPrice.find(
-      (item) => !item.singleJourneyPrice || !item.returnJourneyPrice
-    );
-    // const isExits = tollList.find((item) => item.tollName === tollName);
-    if (tollName && !valid) {
-      const data = {
-        tollName: tollName,
-        prices: journeyPrice,
-      };
-      data.prices.forEach((item) => {
-        delete item.singleJourneyPriceInvalid;
-        delete item.returnJourneyPriceInvalid;
-      });
-      dispatch(addTollsManagementAction(data));
-      props.onCloseAddNewToll();
-      resetState();
+    if (tollName) {
+      const valid = journeyPrice.findIndex(
+        (item) => !item.singleJourneyPrice || !item.returnJourneyPrice
+      );
+      // const isExits = tollList.find((item) => item.tollName === tollName);
+      if (tollName && valid >= 0) {
+        const data = {
+          tollName: tollName,
+          prices: journeyPrice,
+        };
+        data.prices.forEach((item) => {
+          delete item.singleJourneyPriceInvalid;
+          delete item.returnJourneyPriceInvalid;
+        });
+        dispatch(addTollsManagementAction(data));
+        props.onCloseAddNewToll();
+        resetState();
+      } else {
+        setJourneyPrice((prevState) =>
+          prevState.map((item, i) =>
+            i === valid
+              ? {
+                  ...item,
+                  [priceLabel.singleJourneyPrice + "Invalid"]:
+                    item.singleJourneyPrice ? false : true,
+                  [priceLabel.returnJourneyPrice + "Invalid"]:
+                    item.returnJourneyPrice ? false : true,
+                }
+              : item
+          )
+        );
+      }
+    } else {
+      setTollNameInvalid(true);
+      dispatch(
+        showToastAction({
+          header: "AddNewToll",
+          descrption: "Please enter Toll Name",
+          type: toastStatus.error,
+        })
+      );
     }
   };
 
   return (
-    <Modal size="lg" show={props.show} onHide={handleClose} centered>
+    <Modal show={props.show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Add New Toll</Modal.Title>
       </Modal.Header>
@@ -92,11 +118,13 @@ const AddNewToll = (props) => {
                 className="row"
                 style={{ marginBottom: "10px" }}
               >
-                <p className="input-margin col-3 required">{vehicle.name}</p>
-                <div className="col-4">
+                <p className="input-margin col-md-4 col-12 required">
+                  {vehicle.name}
+                </p>
+                <div className="col-md-4 col-12">
                   <input
                     style={{ marginRight: "10px" }}
-                    className={`form-control col-4 ${
+                    className={`form-control mb-2 col-4 ${
                       vehicle.singleJourneyPriceInvalid ? "is-invalid" : ""
                     }`}
                     placeholder="Single Journey"
@@ -112,7 +140,7 @@ const AddNewToll = (props) => {
                   ></input>
                   <div className="invalid-feedback">Required</div>
                 </div>
-                <div className="col-4">
+                <div className="col-md-4 col-12">
                   <input
                     className={`form-control col-4 ${
                       vehicle.returnJourneyPriceInvalid ? "is-invalid" : ""
