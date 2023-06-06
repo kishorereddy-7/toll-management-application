@@ -53,7 +53,7 @@ const AddNewToll = (props) => {
         (item) => !item.singleJourneyPrice || !item.returnJourneyPrice
       );
       // const isExits = tollList.find((item) => item.tollName === tollName);
-      if (tollName && valid >= 0) {
+      if (tollName && valid < 0) {
         const data = {
           tollName: tollName,
           prices: journeyPrice,

@@ -9,13 +9,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { addNewTollEntryAction } from "../state/actions/tollEntryManagementAction";
 import { dateAndTimeDisplay } from "../commonFuntions/time";
+
 const AddNewEntry = (props) => {
   const [selectedToll, setSelectedToll] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [vehicleList, setVehicleList] = useState([]);
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [tariff, setTariff] = useState(0);
-  const [disableTariff, setDisableTariff] = useState(false);
+  const [debounce, setDebounce] = useState(null);
 
   const tollNamesList = useSelector((state = {}) => state.tollsList);
   const tollEntryList = useSelector((state = {}) => state.tollEntryList);
@@ -25,7 +26,6 @@ const AddNewEntry = (props) => {
     setVehicleNumber("");
     setTariff(0);
     setVehicleType("");
-    setDisableTariff(false);
     setSelectedToll("");
   };
 
@@ -47,7 +47,6 @@ const AddNewEntry = (props) => {
       setVehicleNumber("");
       setTariff(0);
       setVehicleType("");
-      setDisableTariff(false);
     }
   };
 
@@ -55,8 +54,8 @@ const AddNewEntry = (props) => {
     setVehicleType(event.target.value);
   };
 
-  const onChangeVehicleNumber = (event) => {
-    setVehicleNumber(event.target.value);
+  const searchTraff = (event) => {
+    const selectedVehicle = vehicleList[vehicleType] || {};
     const entryItem = tollEntryList.findIndex(
       (item) => item.vehicleNumber === event.target.value
     );
@@ -66,14 +65,22 @@ const AddNewEntry = (props) => {
       const timeDifference = todayDate - tollEntryDetails.time;
       const hour = Math.floor(timeDifference / (1000 * 60 * 60));
       if (hour > 1) {
-        setTariff(vehicleList[vehicleType].singleJourneyPrice);
+        setTariff(selectedVehicle.singleJourneyPrice);
       } else {
-        setTariff(vehicleList[vehicleType].returnJourneyPrice);
+        setTariff(selectedVehicle.returnJourneyPrice);
       }
     } else {
-      setTariff(vehicleList[vehicleType].singleJourneyPrice);
+      setTariff(selectedVehicle.singleJourneyPrice);
     }
-    setDisableTariff(true);
+  };
+
+  const onChangeVehicleNumber = (event) => {
+    setVehicleNumber(event.target.value);
+    clearTimeout(debounce);
+    const newDebounce = setTimeout(() => {
+      searchTraff(event);
+    }, 500);
+    setDebounce(newDebounce);
   };
 
   const onChangeTariff = (event) => {
@@ -146,7 +153,7 @@ const AddNewEntry = (props) => {
           <input
             className="form-control"
             value={tariff}
-            disabled={disableTariff}
+            disabled={true}
             onChange={onChangeTariff}
           />
         </Container>
