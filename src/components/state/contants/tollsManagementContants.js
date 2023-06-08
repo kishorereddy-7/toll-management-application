@@ -1,2 +1,2 @@
 export const ADD_NEW_TOLL = "ADD_NEW_TOLL";
-export const UPDATE_TOLL_ON_FILTER = "UPDATE_TOLL_ON_FILTER";
+export const RESET_TOLLS = "RESET_TOLLS";

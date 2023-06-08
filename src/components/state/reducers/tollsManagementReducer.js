@@ -1,7 +1,4 @@
-import {
-  ADD_NEW_TOLL,
-  UPDATE_TOLL_ON_FILTER,
-} from "../contants/tollsManagementContants";
+import { ADD_NEW_TOLL, RESET_TOLLS } from "../contants/tollsManagementContants";
 
 export const tollsManagementReducer = (state = [], action) => {
   switch (action.type) {
@@ -9,7 +6,7 @@ export const tollsManagementReducer = (state = [], action) => {
       return [...state, action.payload];
     }
 
-    case UPDATE_TOLL_ON_FILTER: {
+    case RESET_TOLLS: {
       return action.payload;
     }
 
