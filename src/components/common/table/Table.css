@@ -1,8 +1,14 @@
 table {
-  width: 98%;
   border-collapse: collapse;
   font-size: small;
   text-align: center;
+  padding: 0.2em;
+}
+
+.custom-table {
+  border: 1px solid #ddd;
+  margin: 20px;
+  font-size: 14px;
 }
 
 thead {
@@ -10,17 +16,27 @@ thead {
 }
 
 th {
-  padding: 0.4em;
   color: #848784;
-  border-radius: 10px;
+  padding: 5px 0px;
+  border-right: 1px solid #ddd;
 }
 
 tr {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #ddd;
   text-align: center;
   font-size: medium;
 }
 
 td {
-  padding: 1em;
+  border-right: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+.custom-input {
+  padding: 0.1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }

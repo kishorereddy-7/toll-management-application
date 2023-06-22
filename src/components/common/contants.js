@@ -37,3 +37,41 @@ export const toastStatus = {
   success: "success",
   error: "danger",
 };
+
+export const tollEntryHeader = [
+  "VEHICLE TYPE",
+  "VEHICLE NUMBER",
+  "DATE/TIME",
+  "TOLL NAME",
+  "TARIFF",
+];
+
+export const tollsHeaderList = [
+  "TOLL NAME",
+  "CAR/JEEP/VAN",
+  "LCV",
+  "TRUCK/BUS",
+  "HEAVY VEHICLE",
+];
+
+export const tollEntryFilters = [
+  {
+    key: "vehicleTypeName",
+    placeHolder: "Search Vehicle Type",
+  },
+  {
+    key: "vehicleNumber",
+    placeHolder: "Search Vehicle Number",
+  },
+  {
+    key: "vehicleNumber",
+  },
+  {
+    key: "tollName",
+    placeHolder: "Search Toll Name",
+  },
+  {
+    key: "tariff",
+    placeHolder: "Search Tariff",
+  },
+];

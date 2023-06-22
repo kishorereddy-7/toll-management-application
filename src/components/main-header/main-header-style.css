@@ -1,0 +1,10 @@
+.header-bottom {
+  border-bottom: 2px solid grey;
+}
+
+.com-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}

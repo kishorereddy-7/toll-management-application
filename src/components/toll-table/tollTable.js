@@ -6,22 +6,11 @@ import AddNewToll from "../addnewtoll/AddNewToll";
 import { useState } from "react";
 import AddNewEntry from "../addnewentry/AddNewEntry";
 import { useSelector } from "react-redux";
-
-const tableHeader = [
-  "VEHICLE TYPE",
-  "VEHICLE NUMBER",
-  "DATE/TIME",
-  "TOLL NAME",
-  "TARIFF",
-];
-
-const tollsHeaderList = [
-  "TOLL NAME",
-  "CAR/JEEP/VAN",
-  "LCV",
-  "TRUCK/BUS",
-  "HEAVY VEHICLE",
-];
+import {
+  tollEntryFilters,
+  tollEntryHeader,
+  tollsHeaderList,
+} from "../common/contants";
 
 export const TollTable = () => {
   const [addNewToll, setAddNewToll] = useState(false);
@@ -53,10 +42,10 @@ export const TollTable = () => {
     });
   };
   return (
-    <Card>
-      <div className="main-header row">
+    <div className="background-lav">
+      <div className="main-header">
         <Header isTollgateList={isTollgateList} />
-        <div className="col-md-6 col-lg-5 pull-right">
+        <div>
           <Button className="button-left mt-2" onClick={onClickNewEntry}>
             Add Vehicle Entry
           </Button>
@@ -73,11 +62,23 @@ export const TollTable = () => {
           />
         </div>
       </div>
-      <Table
-        tableHeader={isTollgateList ? tollsHeaderList : tableHeader}
-        list={isTollgateList ? tollList : tollEntryList}
-        isTollgateList={isTollgateList}
-      />
-    </Card>
+      <Card className="card-wrapper">
+        {isTollgateList ? (
+          <Table
+            tableHeader={tollsHeaderList}
+            list={tollList}
+            filters={[]}
+            isTollgateList={isTollgateList}
+          />
+        ) : (
+          <Table
+            tableHeader={tollEntryHeader}
+            list={tollEntryList}
+            filters={tollEntryFilters}
+            isTollgateList={isTollgateList}
+          />
+        )}
+      </Card>
+    </div>
   );
 };
