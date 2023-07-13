@@ -3,7 +3,6 @@ import "./Table.css";
 
 const Table = (props) => {
   const [tableData, setTableData] = useState(props.list);
-  const [debounce, setDebounce] = useState(null);
   const [filters, setFilters] = useState({
     vehicleTypeName: "",
     vehicleNumber: "",
@@ -16,12 +15,36 @@ const Table = (props) => {
     setTableData(props.list);
   }, [props.list]);
 
-  const searchTableData = (value, filter) => {
-    const filterData = props.list.filter((item) =>
-      value ? item[filter.key].includes(value) : true
-    );
-    setTableData(filterData);
-  };
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      const filterData = props.list.filter((item) =>
+        filters.vehicleNumber
+          ? item.vehicleNumber
+              .toLowerCase()
+              .includes(filters.vehicleNumber.toLowerCase())
+          : true && filters.vehicleTypeName
+          ? item.vehicleTypeName
+              .toLowerCase()
+              .includes(filters.vehicleTypeName.toLowerCase())
+          : true && filters.tollName
+          ? item.tollName.toLowerCase().includes(filters.tollName.toLowerCase())
+          : true && filters.tariff
+          ? item.tariff.toLowerCase().includes(filters.tariff.toLowerCase())
+          : true && filters.date
+          ? item.time.getUTCFullYear() === (new Date(filters.date)).getUTCFullYear() &&
+            item.time.getUTCMonth() === (new Date(filters.date)).getUTCMonth() &&
+            item.time.getUTCDate() === (new Date(filters.date)).getUTCDate() &&
+            item.time.getUTCHours() === (new Date(filters.date)).getUTCHours() &&
+            item.time.getUTCMinutes() === (new Date(filters.date)).getUTCMinutes()
+          : true
+      );
+      setTableData(filterData);
+    }, 300);
+
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [filters, props.list]);
 
   const onChangeFilter = (event, filter) => {
     setFilters((preState) => {
@@ -30,11 +53,6 @@ const Table = (props) => {
         [filter.key]: event.target.value,
       };
     });
-    clearTimeout(debounce);
-    const newDebounce = setTimeout(() => {
-      searchTableData(event.target.value, filter);
-    }, 500);
-    setDebounce(newDebounce);
   };
 
   const tableDataRender = () => {
@@ -70,7 +88,7 @@ const Table = (props) => {
   };
 
   return (
-    <table className="custom-table">
+    <table className="custom-table table-sm">
       <thead className="table-light">
         <tr>
           {props.tableHeader.map((head, index) => (
@@ -82,6 +100,7 @@ const Table = (props) => {
             <td key={index}>
               <input
                 className="custom-input"
+                type={filter.type}
                 placeholder={filter.placeHolder}
                 value={filters[filter.key]}
                 onChange={(e) => onChangeFilter(e, filter)}

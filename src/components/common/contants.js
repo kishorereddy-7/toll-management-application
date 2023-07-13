@@ -58,20 +58,31 @@ export const tollEntryFilters = [
   {
     key: "vehicleTypeName",
     placeHolder: "Search Vehicle Type",
+    type: 'text'
   },
   {
     key: "vehicleNumber",
     placeHolder: "Search Vehicle Number",
+    type: 'text'
   },
   {
-    key: "vehicleNumber",
+    key: "date",
+    placeHolder: "Search Date/Time",
+    type: 'datetime-local'
   },
   {
     key: "tollName",
     placeHolder: "Search Toll Name",
+    type: 'text'
   },
   {
     key: "tariff",
     placeHolder: "Search Tariff",
+    type: 'text'
   },
 ];
+
+export const inputTypes = {
+  TEXT: 'text',
+  DATELOCAL: 'datetime-local'
+}

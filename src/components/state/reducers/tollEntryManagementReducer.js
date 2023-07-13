@@ -1,7 +1,7 @@
 import {
   ADD_NEW_TOLL_ENTRY_ENTRY,
   RESET_TOLL_ENTRY,
-} from "../contants/tollEntryManagementConstants";
+} from "../constants/tollEntryManagementConstants";
 
 export const tollEntryManagementReducer = (state = [], action) => {
   switch (action.type) {

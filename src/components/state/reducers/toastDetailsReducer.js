@@ -1,4 +1,4 @@
-import { HIDE_TOAST, SHOW_TOAST } from "../contants/toastDetailsConstants";
+import { HIDE_TOAST, SHOW_TOAST } from "../constants/toastDetailsConstants";
 
 export const toastDetailsReducer = (state, action) => {
   switch (action.type) {

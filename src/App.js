@@ -5,7 +5,7 @@ import MainHeader from "./components/main-header/main-header";
 
 function App() {
   return (
-    <div>
+    <div className="w-100">
       <Toaster />
       <MainHeader />
       <TollTable />

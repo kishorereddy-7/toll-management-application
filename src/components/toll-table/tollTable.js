@@ -42,7 +42,7 @@ export const TollTable = () => {
     });
   };
   return (
-    <div className="background-lav">
+    <div className="background-lav w-100">
       <div className="main-header">
         <Header isTollgateList={isTollgateList} />
         <div>

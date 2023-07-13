@@ -1,4 +1,4 @@
-import { ADD_NEW_TOLL, RESET_TOLLS } from "../contants/tollsManagementContants";
+import { ADD_NEW_TOLL, RESET_TOLLS } from "../constants/tollsManagementContants";
 
 export const tollsManagementReducer = (state = [], action) => {
   switch (action.type) {
