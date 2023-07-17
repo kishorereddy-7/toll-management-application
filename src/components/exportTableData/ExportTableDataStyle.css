@@ -1,0 +1,15 @@
+.export-container {
+    text-align: right;
+    padding-right: 30px;
+    padding-top: 10px;
+  }
+  
+  .excel-button {
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+  
+    &:hover {
+      background-color: #ddd;
+    }
+  }

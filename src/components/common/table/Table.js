@@ -31,11 +31,12 @@ const Table = (props) => {
           : true && filters.tariff
           ? item.tariff.toLowerCase().includes(filters.tariff.toLowerCase())
           : true && filters.date
-          ? item.time.getUTCFullYear() === (new Date(filters.date)).getUTCFullYear() &&
-            item.time.getUTCMonth() === (new Date(filters.date)).getUTCMonth() &&
-            item.time.getUTCDate() === (new Date(filters.date)).getUTCDate() &&
-            item.time.getUTCHours() === (new Date(filters.date)).getUTCHours() &&
-            item.time.getUTCMinutes() === (new Date(filters.date)).getUTCMinutes()
+          ? item.time.getUTCFullYear() ===
+              new Date(filters.date).getUTCFullYear() &&
+            item.time.getUTCMonth() === new Date(filters.date).getUTCMonth() &&
+            item.time.getUTCDate() === new Date(filters.date).getUTCDate() &&
+            item.time.getUTCHours() === new Date(filters.date).getUTCHours() &&
+            item.time.getUTCMinutes() === new Date(filters.date).getUTCMinutes()
           : true
       );
       setTableData(filterData);
@@ -88,14 +89,14 @@ const Table = (props) => {
   };
 
   return (
-    <table className="custom-table table-sm">
+    <table id="tollTable" className="custom-table table-sm">
       <thead className="table-light">
         <tr>
           {props.tableHeader.map((head, index) => (
             <th key={index}>{head}</th>
           ))}
         </tr>
-        <tr>
+        <tr id="filters">
           {props.filters.map((filter, index) => (
             <td key={index}>
               <input

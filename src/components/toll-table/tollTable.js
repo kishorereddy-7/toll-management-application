@@ -11,6 +11,7 @@ import {
   tollEntryHeader,
   tollsHeaderList,
 } from "../common/contants";
+import ExportTableData from "../exportTableData/ExportTableData";
 
 export const TollTable = () => {
   const [addNewToll, setAddNewToll] = useState(false);
@@ -63,6 +64,7 @@ export const TollTable = () => {
         </div>
       </div>
       <Card className="card-wrapper">
+        <ExportTableData fileName={isTollgateList ? "Tolls" : "Toll Entrys"} />
         {isTollgateList ? (
           <Table
             tableHeader={tollsHeaderList}
